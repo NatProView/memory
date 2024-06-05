@@ -283,11 +283,14 @@ while running:
         update_checked_card(second_guess_num, CHECKED)
     grid = draw_grid()
 
+
     if matched_pairs == NUMBER_OF_PAIRS:
         is_game_over = True
+
         winner = max(player_scores, key=player_scores.get)
+        winner_box = pygame.draw.rect(screen, Color.accent.value, [10, HEIGHT - 350, WIDTH - 20, 80], 0, 3)
         winner_text = title_font.render(f"Player {winner} wins!", True, Color.white.value)
-        screen.blit(winner_text, (55, HEIGHT - 345))
+        screen.blit(winner_text, (130, HEIGHT - 345))
     if restart_var:
         restart_game()
         restart_var = False
