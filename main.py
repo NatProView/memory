@@ -9,36 +9,53 @@ import enum
 from CardColor import CardColor
 from Color import Color
 
+# debug mode
+debug = False
+
+# start Pygame and define variables
 pygame.init()
 pygame.mixer.init()
+timer = pygame.time.Clock()
 
+# pygame mixer
 s_dir = 'sound'
 pygame.mixer.music.load(os.path.join(s_dir, 'bkg.mp3'))
 match_sound_effect = pygame.mixer.Sound(os.path.join(s_dir, 'match.mp3'))
-
 pygame.mixer.music.play(-1)
+
+# states
 EMPTY = 0
 MATCHED = 1
 CHECKED = 2
 
-debug = False
+# game config
+fps = 60
 WIDTH = 600
 HEIGHT = 600
 GRID_WIDTH = 6
 GRID_HEIGHT = 4
 CARD_COUNT = GRID_HEIGHT * GRID_WIDTH
 NUMBER_OF_PAIRS = CARD_COUNT // 2
-colouring_helper = 0
 
+# load list of colors available to use for non-card entities
 color_list = []
 for c in enumerate(CardColor):
     color_list.append((c[0], c[1].value))
 print(color_list)
 
-fps = 60
-timer = pygame.time.Clock()
+# game state variables
 new_grid = True
+first_guess = False
+second_guess = False
+restart_var = False
+is_game_over = False
 
+first_guess_num = 0
+second_guess_num = 0
+matched_pairs = 0
+turns = 0
+
+# matrix of correct guesses
 correct = [[0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0],
@@ -47,15 +64,6 @@ correct = [[0, 0, 0, 0, 0, 0],
 options_list = []
 spaces = []
 used = []
-first_guess = False
-second_guess = False
-first_guess_num = 0
-second_guess_num = 0
-matched_pairs = 0
-restart_var = False
-turns = 0
-
-is_game_over = False
 
 # create screen
 screen = pygame.display.set_mode([WIDTH, HEIGHT], pygame.RESIZABLE)
